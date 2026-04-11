@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Smart Expense Splitter Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="nav-logo">💸</div>
+    <div>
+      <div class="nav-name">Smart Expense Splitter Pro</div>
+      <div class="nav-tag">Minimize Transactions · Maximize Fairness</div>
+    </div>
+  </div>
+  <div class="srv-pill">
+    <div class="sdot local" id="sdot"></div>
+    <span id="stext">Running Locally</span>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- ═══ LEFT ═══ -->
+  <div class="left">
+
+    <!-- Step 1: Members -->
+    <div class="card">
+      <div class="step-head">
+        <div class="step-head-l">
+          <div class="step-ico">👥</div>
+          <span class="step-lbl">Step 1 — Add Group Members</span>
+        </div>
+        <div class="cnt-badge" id="mBadge">0 members</div>
+      </div>
+      <div class="step-body">
+        <div class="chips-box" id="chipsBox" onclick="document.getElementById('chipInp').focus()">
+          <input class="chip-inp" id="chipInp" type="text" placeholder="e.g. Alice, Bob, Charlie..." autocomplete="off" />
+        </div>
+        <p class="chips-hint">Press <b>Enter</b> or <b>comma (,)</b> to add</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Expenses -->
+    <div class="card">
+      <div class="step-head">
+        <div class="step-head-l">
+          <div class="step-ico">🧾</div>
+          <span class="step-lbl">Step 2 — Add Expenses</span>
+        </div>
+        <div class="cnt-badge" id="eBadge">0 expenses</div>
+      </div>
+      <div class="step-body">
+        <div class="cur-row">
+          <span class="cur-lbl">Currency:</span>
+          <select class="cur-sel" id="curSel" onchange="symbol=this.value">
+            <option value="₹">₹ Indian Rupee (INR)</option>
+            <option value="$">$ US Dollar (USD)</option>
+            <option value="€">€ Euro (EUR)</option>
+            <option value="£">£ British Pound (GBP)</option>
+          </select>
+          <span class="cur-arr">▾</span>
+        </div>
+        <div class="exp-rows" id="expRows"></div>
+        <button class="btn-add-row" onclick="addRow()">＋ Add Expense Row</button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-bar">
+      <button class="btn-calc" onclick="calculate()">⚡ Calculate Settlements</button>
+      <button class="btn-reset" onclick="resetAll()">🔄 Reset</button>
+    </div>
+
+  </div>
+
+  <!-- ═══ RIGHT ═══ -->
+  <div class="right">
+
+    <!-- Stat cards -->
+    <div class="stats-row">
+      <div class="stat-card sc1">
+        <div class="stat-name">Total Spent</div>
+        <div class="stat-line"></div>
+        <div class="stat-val ph" id="s1">awaiting data</div>
+      </div>
+      <div class="stat-card sc2">
+        <div class="stat-name">Per Person</div>
+        <div class="stat-line"></div>
+        <div class="stat-val ph" id="s2">equal share</div>
+      </div>
+      <div class="stat-card sc3">
+        <div class="stat-name">Members</div>
+        <div class="stat-line"></div>
+        <div class="stat-val ph" id="s3">in this group</div>
+      </div>
+      <div class="stat-card sc4">
+        <div class="stat-name">Transactions</div>
+        <div class="stat-line"></div>
+        <div class="stat-val ph" id="s4">min. required</div>
+      </div>
+    </div>
+
+    <!-- Balance overview -->
+    <div class="result-card">
+      <div class="rc-head">
+        <div class="rc-title"><div class="rc-ico">⚖️</div>Balance Overview</div>
+        <button class="btn-chart" id="chartBtn" onclick="toggleChart()">📊 Show Chart</button>
+      </div>
+      <div class="empty-state" id="emptyState">
+        <div class="empty-ico">⚖️</div>
+        <h3>No results yet</h3>
+        <p>Add members and expenses,<br>then click Calculate.</p>
+      </div>
+      <div class="hidden" id="balContent">
+        <table class="bal-table">
+          <thead><tr><th>Name</th><th>Paid</th><th>Fair Share</th><th>Net Balance</th></tr></thead>
+          <tbody id="balTbody"></tbody>
+        </table>
+        <div class="bar-wrap" id="barWrap"><div id="barInner"></div></div>
+      </div>
+    </div>
+
+    <!-- Settlement plan -->
+    <div class="result-card hidden" id="settlCard">
+      <div class="rc-head">
+        <div class="rc-title"><div class="rc-ico">✅</div>Settlement Plan</div>
+      </div>
+      <div class="txn-wrap" id="txnWrap"></div>
+    </div>
+
+    <!-- History -->
+    <div class="result-card hidden" id="histCard">
+      <div class="rc-head">
+        <div class="rc-title"><div class="rc-ico">📋</div>Expense History</div>
+      </div>
+      <div class="hist-wrap" id="histWrap"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="javascript.js"></script>
+</body>
+</html>
